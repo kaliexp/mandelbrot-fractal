@@ -1,20 +1,36 @@
-// mandelbrot-fractal.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <complex>
+#include <string>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+double map(double value, double start1, double stop1, double start2, double stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main() {
+    const int width = 80;
+    const int height = 40;
+    const int maxIterations = 1000;
+    const std::string gradient = " .:-=+*#%@";
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            double a = map(x, 0, width, -2.0, 1.0);
+            double b = map(y, 0, height, -1.5, 1.5);
+            std::complex<double> c(a, b);
+            std::complex<double> z(0, 0);
+
+            int iterations = 0;
+            while (std::abs(z) < 2.0 && iterations < maxIterations) {
+                z = z * z + c;
+                iterations++;
+            }
+
+            int index = iterations * gradient.size() / maxIterations;
+            if (index >= gradient.size()) index = gradient.size() - 1;
+            std::cout << gradient[index];
+        }
+        std::cout << std::endl;
+    }
+
+    return 0;
+}
