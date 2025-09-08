@@ -17,12 +17,18 @@ int main() {
     int choice;
     std::cin >> choice;
 
+    double xmin, xmax, ymin, ymax;
+    std::cout << "enter the boundaries of the region for the fractal:\n";
+    std::cout << "xmin xmax: "; std::cin >> xmin >> xmax;
+    std::cout << "ymin ymax: "; std::cin >> ymin >> ymax;
+
+
     if (choice == 1) {
 		// output to console
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double a = map(x, 0, width, -2.0, 1.0);
-                double b = map(y, 0, height, -1.5, 1.5);
+                double a = map(x, 0, width, xmin, xmax);
+                double b = map(y, 0, height, ymin, ymax);
                 std::complex<double> c(a, b);
                 std::complex<double> z(0, 0);
 
@@ -53,8 +59,8 @@ int main() {
 
         for (int y = 0; y < ppmHeight; y++) {
             for (int x = 0; x < ppmWidth; x++) {
-                double a = map(x, 0, ppmWidth, -2.0, 1.0);
-                double b = map(y, 0, ppmHeight, -1.5, 1.5);
+                double a = map(x, 0, ppmWidth, xmin, xmax);
+                double b = map(y, 0, ppmHeight, ymin, ymax);
                 std::complex<double> c(a, b);
                 std::complex<double> z(0, 0);
 
